@@ -47,6 +47,7 @@ public class BookController {
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
         bookList.add(book);
+        this.id++;
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
 
