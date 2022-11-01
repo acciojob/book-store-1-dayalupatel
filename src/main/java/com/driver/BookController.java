@@ -20,8 +20,8 @@ public class BookController {
 
     private List<Book> bookList;
     private int id;
-    public List<Book> getBookList() {
-        return bookList;
+    public ResponceEntity<List<Book>> getBookList() {
+        return new ResponceEntity<>(bookList, HttpStatus.OK);
     }
 
     public void setBookList(List<Book> bookList) {
