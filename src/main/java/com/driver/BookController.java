@@ -84,7 +84,7 @@ public class BookController {
     // delete request /delete-all-books
     @DeleteMapping("/delete-all-books")
     public ResponseEntity<String> deleteAllBooks() {
-        bookList.clear();
+        bookList = new ArrayList<>();
         this.id = 1;
         return new ResponseEntity<>("All Books Deleted Successfully", HttpStatus.OK);
     }
