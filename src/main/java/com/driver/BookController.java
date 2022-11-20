@@ -20,8 +20,9 @@ public class BookController {
 
     private List<Book> bookList;
     private int id;
-    public ResponseEntity<List<Book>> getBookList() {
-        return new ResponseEntity<>(bookList, HttpStatus.OK);
+
+    public List<Book> getBookList() {
+        return bookList;
     }
 
     public void setBookList(List<Book> bookList) {
@@ -77,7 +78,7 @@ public class BookController {
     // get request /get-all-books
     @GetMapping("/get-all-books")
     public ResponseEntity<List<Book>> getAllBooks() {
-        return getBookList();
+        return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
     // delete request /delete-all-books
