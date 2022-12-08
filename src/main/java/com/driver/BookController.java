@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("books")
 public class BookController {
 
-    private List<Book> bookList;
+    List<Book> bookList;
+
     private int id;
 
     public List<Book> getBookList() {
@@ -64,6 +65,39 @@ public class BookController {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
+    
+    // get request /get-all-books
+    @GetMapping("/get-all-books")
+    public ResponseEntity<List<Book>> getAllBooks() {
+        return new ResponseEntity<>(bookList, HttpStatus.OK);
+    }
+
+    // get request /get-books-by-author
+    @GetMapping("/get-books-by-author")
+    // pass author name as request param
+    public ResponseEntity<List<Book>> getBooksByAuthor(@RequestParam("author")String author) {
+        List<Book> books = new ArrayList<>();
+        for(Book book : bookList) {
+            if(book.getAuthor().equals(author)) {
+                books.add(book);
+            }
+        }
+        return new ResponseEntity<>(books, HttpStatus.NOT_FOUND);
+    }
+
+    // get request /get-books-by-genre
+    @GetMapping("/get-books-by-genre")
+    // pass genre name as request param
+    public ResponseEntity<List<Book>> getBooksByGenre(@RequestParam("genre")String genre) {
+        List<Book> books = new ArrayList<>();
+        for(Book book : bookList) {
+            if(book.getGenre().equals(genre)) {
+                books.add(book);
+            }
+        }
+        return new ResponseEntity<>(books, HttpStatus.NOT_FOUND);
+    }
+
     // delete request /delete-book-by-id/{id}
     // pass id as path variable
     @DeleteMapping("/delete-book-by-id/{id}")
@@ -75,11 +109,6 @@ public class BookController {
         }
         return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
     }
-    // get request /get-all-books
-    @GetMapping("/get-all-books")
-    public ResponseEntity<List<Book>> getAllBooks() {
-        return new ResponseEntity<>(bookList, HttpStatus.OK);
-    }
 
     // delete request /delete-all-books
     @DeleteMapping("/delete-all-books")
@@ -87,27 +116,5 @@ public class BookController {
         bookList = new ArrayList<>();
         this.id = 1;
         return new ResponseEntity<>("All Books Deleted Successfully", HttpStatus.OK);
-    }
-
-    // get request /get-books-by-author
-    @GetMapping("/get-books-by-author")
-    // pass author name as request param
-    public ResponseEntity<Book> getBooksByAuthor(@RequestParam("author")String author) {
-        for(Book book : bookList) {
-            if(book.getAuthor().equals(author)) 
-                return new ResponseEntity<>(book, HttpStatus.FOUND);
-        }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
-
-    // get request /get-books-by-genre
-    @GetMapping("/get-books-by-genre")
-    // pass genre name as request param
-    public ResponseEntity<Book> getBooksByGenre(@RequestParam("genre")String genre) {
-        for(Book book : bookList) {
-            if(book.getGenre().equals(genre)) 
-                return new ResponseEntity<>(book, HttpStatus.FOUND);
-        }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
